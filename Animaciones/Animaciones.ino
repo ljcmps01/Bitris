@@ -16,7 +16,11 @@ volatile int fila=0,col=0;
 void VerticalEdit(int y,bool value);
 void HorizontalEdit(int x,bool value);
 void Clear();
+void Full();
 void VerticalClean();
+void HorizontalClean();
+void FillingUp();
+void Blink();
 
 void setup() {
  
@@ -42,7 +46,11 @@ void setup() {
 }
 
 void loop() {
+  Blink();
   VerticalClean();
+  FillingUp();
+  HorizontalClean();
+  Full();
 }
 
 ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
@@ -83,6 +91,41 @@ void VerticalClean(){
   int i;
   for(i=0;i<7;i++){
     VerticalEdit(i,0);
+    delay(100);
+  }
+}
+
+void FillingUp(){
+  int i,j;
+  for(i=7;i>=0;i--){
+    for(j=0;j<5;j++){
+      hab[i][j]=1;
+      delay(50);
+    }
+  }
+}
+
+void Full(){
+  int i;
+  for(i=0;i<5;i++){
+    HorizontalEdit(i,1);
+  }
+}
+
+void HorizontalClean(){
+  int i;
+  for(i=0;i<5;i++){
+    HorizontalEdit(i,0);
+    delay(100);
+  }
+}
+
+void Blink(){
+  int i;
+  for(i=0;i<4;i++){
+    Clear();
+    delay(100);
+    Full();
     delay(100);
   }
 }
