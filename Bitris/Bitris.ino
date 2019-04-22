@@ -10,15 +10,15 @@
 #define FILA PORTF
 
 //Variables de desplazamiento del jugador
-const int nivel[6]={15,12,10,8,6,4};
+const int nivel[6]={15,12,10,8,6,4};    //Vector que regula la velocidad del juego
 volatile int ContadorDeNivel=0,nivelSelector=0;
-volatile int pos=0;
-volatile bool dir=0;
+volatile int pos=0;                     //Variable que controla la posicion del jugador
+volatile bool dir=0;                    //Variable que controla la direccion del jugador
 volatile int contShift=31;
 
 //Variables de control de la matriz
-bool hab[7][5]={
-{0,0,0,0,0},
+bool hab[7][5]={      //Esquema digital de la matriz
+{0,0,0,0,0},          //Controla que leds se prenden
 {0,0,0,0,0},
 {0,0,0,0,0},
 {0,0,0,0,0},
@@ -26,7 +26,7 @@ bool hab[7][5]={
 {0,0,0,0,0},
 {0,0,0,0,0}
 };
-volatile int fila=0,col=0;
+volatile int fila=0,col=0;  //Variable que controla que posicion de la matriz verificar
 
 //Variables del boton y animacion de caida
 volatile bool boton=0;
@@ -36,15 +36,17 @@ volatile int contDrop=100;
 volatile int place;
 
 //Variables del juego
-int rowCheck();
-volatile int vida=3;
-volatile bool game=0,start=0,lost=0;
+int rowCheck();       //Funcion que checkea cuantos espacios libres quedan en una fila
+volatile int vida=3;  //Variable que controla las vidas del jugador
+volatile bool game=0,start=0,lost=0;  //Game habilita el funcionamiento del juego, 
+                                      //start le da comienzo
+                                      //Lost indica que se perdió
 
 //animaciones
-void VerticalEdit(int y,bool value);
-void HorizontalEdit(int x,bool value);
-void Clear();
-void VerticalClean();
+void VerticalEdit(int y,bool value);  //Edita columnas
+void HorizontalEdit(int x,bool value);//Edita filas
+void Clear();                         //Limpia la matriz completamente
+void VerticalClean();                 //Hace un barrido vertical
 
 void setup() {
   DDRF=255;
