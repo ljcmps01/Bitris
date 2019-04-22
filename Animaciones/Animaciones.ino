@@ -1,7 +1,6 @@
 #define COL PORTK
 #define FILA PORTF
 
-const int out[7]={1,2,4,8,16,32,64};
 bool hab[7][5]={
 {1,1,1,1,1},
 {1,1,1,1,1},
@@ -12,6 +11,8 @@ bool hab[7][5]={
 {1,1,1,1,1}
 };
 volatile int fila=0,col=0;
+
+volatile int c_animation=0,animate=0,i=0;
 
 void VerticalEdit(int y,bool value);
 void HorizontalEdit(int x,bool value);
@@ -33,7 +34,7 @@ void setup() {
   TCCR1A=0;                           //limpiamos los registros de control
   TCCR1B=0;                           //del timer 1
 
-  OCR1A=5;            //3 valor minimo, 5 se ve multiplexado en grabacion de 60fps, 8 valor maximo
+  OCR1A=3;            //3 valor minimo, 5 se ve multiplexado en grabacion de 60fps, 8 valor maximo
   TCCR1B|=(1<<WGM12);
   TCCR1B|=(1<<CS10);
   TCCR1B|=(1<<CS12);
@@ -46,14 +47,34 @@ void setup() {
 }
 
 void loop() {
-  Blink();
-  VerticalClean();
-  FillingUp();
-  HorizontalClean();
-  Full();
+
 }
 
 ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
+  switch(animate){
+    case 0:
+      if(c_animation<512)c_animation++;
+      else{
+        Blink();
+        c_animation=0;
+      }
+      break;
+    case 1:
+      if(c_animation<512)c_animation++;
+      else{
+        VerticalClean();
+        c_animation=0;
+      }
+      break;
+    case 2:
+      if(c_animation<512)c_animation++;
+      else{
+        HorizontalClean();
+        c_animation=0;
+      }
+      break;
+    default: break;
+  }
   if(hab[fila][col])
   COL=~(1<<col);
   else COL=~(0<<col);
@@ -87,14 +108,6 @@ void Clear(){
   }
 }
 
-void VerticalClean(){
-  int i;
-  for(i=0;i<7;i++){
-    VerticalEdit(i,0);
-    delay(100);
-  }
-}
-
 void FillingUp(){
   int i,j;
   for(i=7;i>=0;i--){
@@ -113,19 +126,39 @@ void Full(){
 }
 
 void HorizontalClean(){
-  int i;
-  for(i=0;i<5;i++){
+  if(i<5){
     HorizontalEdit(i,0);
-    delay(100);
+    i++;
+  }
+  else{
+    animate=0;
+    i=0;
+    Full();
+  }
+}
+
+void VerticalClean(){
+  if(i<7){
+    VerticalEdit(i,0);
+    i++;
+  }
+  else{
+    animate=2;
+    i=0;
+    Full(); //Se vuelve a llenar la matriz solo para probar COMENTAR LINEA
   }
 }
 
 void Blink(){
-  int i;
-  for(i=0;i<4;i++){
+  if(i<8){
+    if(i%2)
     Clear();
-    delay(100);
-    Full();
-    delay(100);
+    else Full();
+    i++;
+  }
+  else{
+    animate=1;
+    i=0;
+    Full(); //Se vuelve a llenar la matriz solo para probar COMENTAR LINEA
   }
 }
