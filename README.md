@@ -19,3 +19,9 @@ Changelog:
 17/04 Se creó programa con animaciones basicas, horizontales y verticales
 17/04 El boton da inicio al primer juego, se agregó animación cuando se pierde y reinicio con el boton 
 [Arreglar falso inicio]
+22/04 VerticalClean, HorizontalClean, Blink pasadas a TIMER
+
+Bugs/Trabajo por hacer:
+*Arreglar falso inicio (Bitris)
+*Pasar funcion FillUp a TIMER (Animaciones)
+*Agregar las nuevas funciones de Animaciones al programa principal (De Animaciones a Bitris)
