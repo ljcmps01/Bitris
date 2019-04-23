@@ -12,7 +12,7 @@ bool hab[7][5]={
 };
 volatile int fila=0,col=0;
 
-volatile int c_animation=0,animate=0,i=0;
+volatile int c_animation=0,animate=0,i=0,j=0;
 
 void VerticalEdit(int y,bool value);
 void HorizontalEdit(int x,bool value);
@@ -73,6 +73,13 @@ ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
         c_animation=0;
       }
       break;
+    case 3:
+      if(c_animation<50)c_animation++;
+      else{
+        FillingUp();
+        c_animation=0;
+      }
+      break;
     default: break;
   }
   if(hab[fila][col])
@@ -109,12 +116,20 @@ void Clear(){
 }
 
 void FillingUp(){
-  int i,j;
-  for(i=7;i>=0;i--){
-    for(j=0;j<5;j++){
-      hab[i][j]=1;
-      delay(50);
+  if(i<7){
+    if(j<5){
+      hab[6-i][j]=1;
+      j++;
     }
+    else{
+      j=0;
+      i++;
+    }
+    
+  }
+  else{
+    i=0;
+    animate=0;
   }
 }
 
@@ -131,9 +146,9 @@ void HorizontalClean(){
     i++;
   }
   else{
-    animate=0;
+    animate=3;
     i=0;
-    Full();
+//    Full();
   }
 }
 
