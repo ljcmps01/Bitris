@@ -1,11 +1,9 @@
 /*Adiciones:
- *Primer inicio y Reinicio con boton
- *Animacion cuando perdes
- *Animaciones basicas para el juego
+ * Animaciones pasadas a Timer
+ * Animaciones de inicio, victoria y derrota
+ * Correccion de falso inicio
  */
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
 #define COL PORTK
 #define FILA PORTF
 
@@ -38,7 +36,7 @@ volatile int place;
 //Variables del juego
 int rowCheck();       //Funcion que checkea cuantos espacios libres quedan en una fila
 volatile int vida=3;  //Variable que controla las vidas del jugador
-volatile bool game=0,start=0,lost=0;  //Game habilita el funcionamiento del juego, 
+volatile bool game=0,start=0,lost=0,win=0;  //Game habilita el funcionamiento del juego, 
                                       //start le da comienzo
                                       //Lost indica que se perdió
 
@@ -47,6 +45,10 @@ void VerticalEdit(int y,bool value);  //Edita columnas
 void HorizontalEdit(int x,bool value);//Edita filas
 void Clear();                         //Limpia la matriz completamente
 void VerticalClean();                 //Hace un barrido vertical
+void HorizontalClean();               //Barrido Horizontal
+void FillingUp();                     //Llenado de izquierda a derecha
+void Blink();                         //Parpadeos
+volatile int c_animation=0,animate=0,i=0,j=0;
 
 void setup() {
   DDRF=255;
@@ -74,45 +76,74 @@ void setup() {
 }
 
 void loop() {
-  if(lost){
-    VerticalClean();
-    lost=0;
-  }
 }
 
 ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
   if(start){
-    //Funcion de caida
-    if(boton){
-    if(contDrop==0){  
-      Drop();
-      contDrop=100;
-    }
-    else contDrop--;
-    }
-    else{
-      
-      //Desplazamiento del jugador
-      if(contShift==0){
-        rowCheck();
-        ContadorDeNivel++;                //Se aumenta el contador de Shifteo
-        if(ContadorDeNivel>=nivel[nivelSelector]){    //Si matchea con la velocidad del nivel correspondiente
-          hab[0][pos]=0;                  //Luego de hacer la suma o resta correspondiente se muestra la posicion en la matriz
-          if(dir){                        //Depende la direccion 
-            if(pos>0)pos--;               //Se baja el valor de pos(columna de posicion) del jugador moviendolo a la izquierda
-            else dir=0;                   //Cuando llega a 0 se invierte dir
-          }
-          else{
-            if(pos<4)pos++;               //Se aumenta el valor de pos(columna de posicion) del jugador moviendolo a la derecha
-            else dir=1;                   //Cuando llega a 4 se invierte dir
-          }
-          hab[0][pos]=1;                  //Luego de hacer la suma o resta correspondiente se muestra la posicion en la matriz
-          ContadorDeNivel=0;              //Y se resetea el contador de Shifteo
-        }
-        contShift=31;
+    switch(animate){
+    case 0:
+      if(c_animation<512)c_animation++;
+      else{
+        Blink();
+        c_animation=0;
       }
-      else contShift--;
-    }}
+      break;
+    case 1:
+      if(c_animation<512)c_animation++;
+      else{
+        VerticalClean();
+        c_animation=0;
+      }
+      break;
+    case 2:
+      if(c_animation<512)c_animation++;
+      else{
+        HorizontalClean();
+        c_animation=0;
+      }
+      break;
+    case 3:
+      if(c_animation<50)c_animation++;
+      else{
+        FillingUp();
+        c_animation=0;
+      }
+      break;
+    default: 
+      //Funcion de caida
+      if(boton){
+      if(contDrop==0){  
+        Drop();
+        contDrop=100;
+      }
+      else contDrop--;
+      }
+      else{
+        
+        //Desplazamiento del jugador
+        if(contShift==0){
+          rowCheck();
+          ContadorDeNivel++;                //Se aumenta el contador de Shifteo
+          if(ContadorDeNivel>=nivel[nivelSelector]){    //Si matchea con la velocidad del nivel correspondiente
+            hab[0][pos]=0;                  //Luego de hacer la suma o resta correspondiente se muestra la posicion en la matriz
+            if(dir){                        //Depende la direccion 
+              if(pos>0)pos--;               //Se baja el valor de pos(columna de posicion) del jugador moviendolo a la izquierda
+              else dir=0;                   //Cuando llega a 0 se invierte dir
+            }
+            else{
+              if(pos<4)pos++;               //Se aumenta el valor de pos(columna de posicion) del jugador moviendolo a la derecha
+              else dir=1;                   //Cuando llega a 4 se invierte dir
+            }
+            hab[0][pos]=1;                  //Luego de hacer la suma o resta correspondiente se muestra la posicion en la matriz
+            ContadorDeNivel=0;              //Y se resetea el contador de Shifteo
+          }
+          contShift=31;
+        }
+        else contShift--;
+      }
+      break;
+    }
+    }
     //Multiplexado de la matriz
     if(hab[fila][col])
     COL=~(1<<col);
@@ -128,7 +159,8 @@ ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
 
 
 ISR(INT0_vect){
-  if(!game){
+  if(!start){
+    win=0;
     pos=0;
     vida=3;
     fila=0;
@@ -136,12 +168,12 @@ ISR(INT0_vect){
     altura=6;
     nivelSelector=0;
     Clear();
+    animate=0;
     //Funcion de vacio de la matriz
     start=1;
-    game=1;
     Serial.println("Comienza");
   }
-  if(start)
+  if(game){
   EIMSK&=(0<<INT0);
   place=pos;
   if(hab[altura][place]){
@@ -152,13 +184,14 @@ ISR(INT0_vect){
     if(vida<=0){
       Serial.println("PERDISTE");
       //TIMSK1&=(0<<OCIE1A);//Se podria deshabilitar el TIMER1 para detener el juego pero se espera agregar animaciones mejor
+      VerticalEdit(0,0);
+      i=altura;
       lost=1;
-      game=0;
-      start=0;
-      EIMSK|=(1<<INT0);
+      animate=1;
     }
   }
   boton=true;
+  }
 }
 
 void Drop(){
@@ -181,12 +214,20 @@ int rowCheck(){
     if(hab[altura][i])full++;
   }
   if(full==5){
-  altura--;
-  nivelSelector++;
-  Serial.print("Fila: ");
-  Serial.println(altura);        
-  Serial.print("Nivel: ");
-  Serial.println(nivelSelector);
+    altura--;
+    if(altura){
+      nivelSelector++;
+      Serial.print("Fila: ");
+      Serial.println(altura);        
+      Serial.print("Nivel: ");
+      Serial.println(nivelSelector);
+    }
+    else{
+      Clear();
+      game=0;
+      animate=3;
+      win=1;
+    }
   }
 }
 
@@ -211,11 +252,76 @@ void Clear(){
   }
 }
 
-void VerticalClean(){
+void Full(){  
   int i;
-  VerticalEdit(0,0);
-  for(i=altura;i<7;i++){
+  for(i=0;i<5;i++){
+    HorizontalEdit(i,1);
+  }
+}
+
+void FillingUp(){ //animate=3
+  if(i<7){
+    if(j<5){
+      hab[6-i][j]=1;
+      j++;
+    }
+    else{
+      j=0;
+      i++;
+    }
+    
+  }
+  else{
+    i=0;
+    animate=0;
+  }
+}
+
+void HorizontalClean(){//animate=2
+  if(i<5){
+    HorizontalEdit(i,0);
+    i++;
+  }
+  else{
+    animate=4;
+    i=0;
+    game=1;
+//    Full();
+  }
+}
+
+void VerticalClean(){//animate=1
+  if(i<7){
     VerticalEdit(i,0);
-    delay(100);
+    i++;
+  }
+  else{
+    animate=5;
+    i=0;
+    if(lost){
+      start=0;
+      game=0;
+      boton=false;
+      EIMSK|=(1<<INT0);
+      }
+  }
+}
+
+void Blink(){       //animate=0
+  if(i<8){
+    if(i%2)
+    Clear();
+    else Full();
+    i++;
+  }
+  else{
+    if(!win){
+    animate=2;    
+    Full(); //Se vuelve a llenar la matriz solo para probar COMENTAR LINEA
+    }
+    else {
+      start=0;
+    }
+    i=0;
   }
 }
