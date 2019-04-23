@@ -20,7 +20,7 @@ Changelog:
 17/04 El boton da inicio al primer juego, se agregó animación cuando se pierde y reinicio con el boton 
 [Arreglar falso inicio]
 22/04 VerticalClean, HorizontalClean, Blink pasadas a TIMER
-23/04 animacion de FillUp pasada a TIMER \n
+23/04 animacion de FillUp pasada a TIMER
 23/04 Renovacion de Bitris con animaciones de inicio, perdida y victoria (En timer), Falso inicio arreglado
 
 
