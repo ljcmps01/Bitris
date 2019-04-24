@@ -22,10 +22,9 @@ Changelog:
 22/04 VerticalClean, HorizontalClean, Blink pasadas a TIMER
 23/04 animacion de FillUp pasada a TIMER \n
 23/04 Renovacion de Bitris con animaciones de inicio, perdida y victoria (En timer), Falso inicio arreglado
-
+23/04 Definiciones Globales del juego
+---------------FIN DEL CUERPO PRINCIPAL----------------
 
 Bugs/Trabajo por hacer:
-*Agregar configuracion del juego facil via definiciones macro
----------------FIN DEL CUERPO PRINCIPAL----------------
 *Agregar sonido
 *Agregar displays de vidas y niveles (CD4511)

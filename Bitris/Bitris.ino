@@ -1,11 +1,14 @@
 /*Adiciones:
- * Animaciones pasadas a Timer
- * Animaciones de inicio, victoria y derrota
- * Correccion de falso inicio
+ * Definiciones Globales para configuracion facil del juego
  */
 
 #define COL PORTK
 #define FILA PORTF
+
+#define VIDAS 3
+#define AlturaDeMatriz 6
+#define AnchoDeMatriz 4
+#define AnimacionVelocidad 500
 
 //Variables de desplazamiento del jugador
 const int nivel[6]={15,12,10,8,6,4};    //Vector que regula la velocidad del juego
@@ -29,13 +32,13 @@ volatile int fila=0,col=0;  //Variable que controla que posicion de la matriz ve
 //Variables del boton y animacion de caida
 volatile bool boton=0;
 void Drop();
-volatile int altura=6,caida=0;
+volatile int altura,caida=0;
 volatile int contDrop=100;
 volatile int place;
 
 //Variables del juego
 int rowCheck();       //Funcion que checkea cuantos espacios libres quedan en una fila
-volatile int vida=3;  //Variable que controla las vidas del jugador
+volatile int vida;  //Variable que controla las vidas del jugador
 volatile bool game=0,start=0,lost=0,win=0;  //Game habilita el funcionamiento del juego, 
                                       //start le da comienzo
                                       //Lost indica que se perdió
@@ -82,28 +85,28 @@ ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
   if(start){
     switch(animate){
     case 0:
-      if(c_animation<512)c_animation++;
+      if(c_animation<AnimacionVelocidad)c_animation++;
       else{
         Blink();
         c_animation=0;
       }
       break;
     case 1:
-      if(c_animation<512)c_animation++;
+      if(c_animation<AnimacionVelocidad)c_animation++;
       else{
         VerticalClean();
         c_animation=0;
       }
       break;
     case 2:
-      if(c_animation<512)c_animation++;
+      if(c_animation<(AnimacionVelocidad/2))c_animation++;
       else{
         HorizontalClean();
         c_animation=0;
       }
       break;
     case 3:
-      if(c_animation<50)c_animation++;
+      if(c_animation<(AnimacionVelocidad/100))c_animation++;
       else{
         FillingUp();
         c_animation=0;
@@ -131,7 +134,7 @@ ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
               else dir=0;                   //Cuando llega a 0 se invierte dir
             }
             else{
-              if(pos<4)pos++;               //Se aumenta el valor de pos(columna de posicion) del jugador moviendolo a la derecha
+              if(pos<AnchoDeMatriz)pos++;               //Se aumenta el valor de pos(columna de posicion) del jugador moviendolo a la derecha
               else dir=1;                   //Cuando llega a 4 se invierte dir
             }
             hab[0][pos]=1;                  //Luego de hacer la suma o resta correspondiente se muestra la posicion en la matriz
@@ -149,10 +152,10 @@ ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
     COL=~(1<<col);
     else COL=~(0<<col);
     FILA=(1<<fila);
-    if(col<5)col++;
+    if(col<=AnchoDeMatriz)col++;
     else{
       col=0;
-      if(fila<7)fila++;
+      if(fila<=AlturaDeMatriz)fila++;
       else fila=0;
     }
 }
@@ -162,10 +165,10 @@ ISR(INT0_vect){
   if(!start){
     win=0;
     pos=0;
-    vida=3;
+    vida=VIDAS;
     fila=0;
     col=0;
-    altura=6;
+    altura=AlturaDeMatriz;
     nivelSelector=0;
     Clear();
     animate=0;
