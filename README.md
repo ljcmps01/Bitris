@@ -24,7 +24,10 @@ Changelog:
 23/04 Renovacion de Bitris con animaciones de inicio, perdida y victoria (En timer), Falso inicio arreglado
 23/04 Definiciones Globales del juego
 ---------------FIN DEL CUERPO PRINCIPAL----------------
+24/04 Creado programa de Display de vida y nivel con CD4511
 
 Bugs/Trabajo por hacer:
+*Agregar displays de vidas y niveles (CD4511)(No usar puertos K ni F)
+
 *Agregar sonido
-*Agregar displays de vidas y niveles (CD4511)
+
