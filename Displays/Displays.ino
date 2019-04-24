@@ -2,13 +2,14 @@
  * Primer version: Control y multiplexado de los displays
  */
 
+#define DISPLAY PORTA
+
 volatile bool Multiplex=0;
 volatile int nivel=0;
 volatile int vida=0;
 
  void setup() {
-  DDRF=255;
-  DDRK=255;
+  DDRA=255;
   Serial.begin(9600);
   cli();                              //deshabilito temporalmente las interrupciones
   TCCR1A=0;                           //limpiamos los registros de control
@@ -23,8 +24,7 @@ volatile int vida=0;
   TIMSK1|=(1<<OCIE1A);                  //enciendo el timer1
   
   sei();                              //activamos las interrupciones
-  PORTF=8;
-  PORTK=0;
+  PORTA=8;
 }
 
 void loop() {
@@ -40,15 +40,15 @@ void loop() {
 ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
   Multiplex=!Multiplex;
   if(Multiplex){
-    PORTF=nivel;
+    PORTA=nivel;
     
-    PORTF&=~(1<<7);
-    PORTF|=(1<<6);
+    PORTA&=~(1<<7);
+    PORTA|=(1<<6);
   }
   else{
-    PORTF=vida;
+    PORTA=vida;
     
-    PORTF&=~(1<<6);
-    PORTF|=(1<<7);
+    PORTA&=~(1<<6);
+    PORTA|=(1<<7);
   }
 }

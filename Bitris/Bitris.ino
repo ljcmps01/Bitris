@@ -1,7 +1,7 @@
 /*Adiciones:
  * Definiciones Globales para configuracion facil del juego
  */
-
+#define DISPLAY PORTA
 #define COL PORTK
 #define FILA PORTF
 
@@ -9,6 +9,9 @@
 #define AlturaDeMatriz 6
 #define AnchoDeMatriz 4
 #define AnimacionVelocidad 500
+
+//Variables del display
+volatile bool Multiplex=0;
 
 //Variables de desplazamiento del jugador
 const int nivel[6]={15,12,10,8,6,4};    //Vector que regula la velocidad del juego
@@ -58,6 +61,7 @@ void setup() {
   FILA=1;  
   DDRK=255;
   COL=255;
+  DDRA=255;
   Serial.begin(9600);
   cli();                  //deshabilito temporalmente las interrupciones
   TCCR1A=0;               //limpiamos los registros de control
@@ -75,7 +79,7 @@ void setup() {
   EICRA|=(1<<ISC01);  
   
   sei();                  //activamos las interrupciones
-
+  PORTA=0;
 }
 
 void loop() {
@@ -147,6 +151,19 @@ ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
       break;
     }
     }
+    Multiplex=!Multiplex;
+      if(Multiplex){
+        PORTA=nivelSelector;
+        
+        PORTA&=~(1<<7);
+        PORTA|=(1<<6);
+      }
+      else{
+        PORTA=vida;
+        //Serial.println(PORTA);
+        PORTA&=~(1<<6);
+        PORTA|=(1<<7);
+      }
     //Multiplexado de la matriz
     if(hab[fila][col])
     COL=~(1<<col);
