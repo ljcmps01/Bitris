@@ -5,9 +5,9 @@
 #define COL PORTK
 #define FILA PORTF
 
-#define VIDAS 3
-#define AlturaDeMatriz 6
-#define AnchoDeMatriz 4
+#define VIDAS 99
+#define AlturaDeMatriz 5  //Uno menos que el valor real
+#define AnchoDeMatriz 3   //Uno menos que el valor real
 #define AnimacionVelocidad 500
 
 //Variables del display
@@ -21,14 +21,13 @@ volatile bool dir=0;                    //Variable que controla la direccion del
 volatile int contShift=31;
 
 //Variables de control de la matriz
-bool hab[7][5]={      //Esquema digital de la matriz
-{0,0,0,0,0},          //Controla que leds se prenden
-{0,0,0,0,0},
-{0,0,0,0,0},
-{0,0,0,0,0},
-{0,0,0,0,0},
-{0,0,0,0,0},
-{0,0,0,0,0}
+bool hab[6][4]={      //Esquema digital de la matriz
+{0,0,0,0},          //Controla que leds se prenden
+{0,0,0,0},
+{0,0,0,0},
+{0,0,0,0},
+{0,0,0,0},
+{0,0,0,0}
 };
 volatile int fila=0,col=0;  //Variable que controla que posicion de la matriz verificar
 
@@ -230,10 +229,10 @@ void Drop(){
 int rowCheck(){
   int i;
   int full=0;
-  for(i=0;i<5;i++){
+  for(i=0;i<AnchoDeMatriz+1;i++){
     if(hab[altura][i])full++;
   }
-  if(full==5){
+  if(full==AnchoDeMatriz+1){
     altura--;
     if(altura){
       nivelSelector++;
