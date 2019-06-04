@@ -5,7 +5,7 @@
 #define COL PORTK
 #define FILA PORTF
 
-#define VIDAS 99
+#define VIDAS 9
 #define AlturaDeMatriz 5  //Uno menos que el valor real
 #define AnchoDeMatriz 3   //Uno menos que el valor real
 #define AnimacionVelocidad 500
