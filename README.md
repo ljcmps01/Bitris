@@ -48,12 +48,39 @@ _24/04 Acoplado el control de displays al programa principal_
 
 _30/07 Realizado programa para Arduino UNO_
 
+_30/07 Realizado PCB de placa principal_
+
+_13/08 Realizado PCB de placa displays_
+
+_16/08 Adjuntado informe del proyecto_
+
 ## Bugs/Trabajo por hacer:
+
+### Software 
+
 * **LED fantasma**
+
 * **Doble pulsacion**
-*Agregar sonido
+
+* Agregar sonido
+
+### Hardware 
+
+* Diseñar amplificador (SCH Y PCB)
+
+* Montar placas
 
 ## Creadores
-Alejo Rodrigo Campos (@ljcmps01) -_Primer programa de control Arduino MEGA_-
 
-Alex Obregon (@alobre4148) -_Programa compatible Arduino UNO_ (Programa a utilizar para producto final)-
+Alejo Rodrigo Campos (@ljcmps01):
+
+* -_Primer programa de control Arduino MEGA_-
+
+* -_Primer diseño SCH y PCB_-
+
+
+Alex Obregon (@alobre4148):
+
+* -_Programa compatible Arduino UNO_ (Programa a utilizar para producto final)-
+
+* -_Diseño PCB final placa principal_-
