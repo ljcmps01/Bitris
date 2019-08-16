@@ -49,9 +49,11 @@ _24/04 Acoplado el control de displays al programa principal_
 _30/07 Realizado programa para Arduino UNO_
 
 ## Bugs/Trabajo por hacer:
-
+* **LED fantasma**
+* **Doble pulsacion**
 *Agregar sonido
 
 ## Creadores
 Alejo Rodrigo Campos (@ljcmps01) -_Primer programa de control Arduino MEGA_-
+
 Alex Obregon (@alobre4148) -_Programa compatible Arduino UNO_ (Programa a utilizar para producto final)-
