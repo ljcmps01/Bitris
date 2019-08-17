@@ -28,9 +28,9 @@ _13-04 Se le agrega control de vida y nivel (La vida es solo visual y no afecta 
 
 _17/04 Se creó programa con animaciones basicas, horizontales y verticales_
 
-_17/04 El boton da inicio al primer juego, se agregó animación cuando se pierde y reinicio con el boton _
+_17/04 El boton da inicio al primer juego, se agregó animación cuando se pierde y reinicio con el boton_
 
-**[Arreglar falso inicio]**
+~~**[Arreglar falso inicio]**~~
 
 _22/04 VerticalClean, HorizontalClean, Blink pasadas a TIMER_
 
