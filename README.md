@@ -54,6 +54,9 @@ _13/08 Realizado PCB de placa displays_
 
 _16/08 Adjuntado informe del proyecto_
 
+_19/08 Agregado Diseño 3D del gabinete_
+
+
 ## Bugs/Trabajo por hacer:
 
 ### Software 
