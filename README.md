@@ -56,6 +56,8 @@ _16/08 Adjuntado informe del proyecto_
 
 _19/08 Agregado Diseño 3D del gabinete_
 
+_03/09 Arreglo de diseño de PCB principal_
+
 
 ## Bugs/Trabajo por hacer:
 
