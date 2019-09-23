@@ -58,6 +58,10 @@ _19/08 Agregado Diseño 3D del gabinete_
 
 _03/09 Arreglo de diseño de PCB principal_
 
+_12/09 Diseño 3D de la rampa de las monedas_
+
+_20/09 Diseño 3D de la matriz LED_
+
 
 ## Bugs/Trabajo por hacer:
 
@@ -82,6 +86,8 @@ Alejo Rodrigo Campos (@ljcmps01):
 * -_Primer programa de control Arduino MEGA_-
 
 * -_Primer diseño SCH y PCB_-
+
+* -_Modelos en 3D_-
 
 
 Alex Obregon (@alobre4148):
