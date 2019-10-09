@@ -62,6 +62,7 @@ _12/09 Diseño 3D de la rampa de las monedas_
 
 _20/09 Diseño 3D de la matriz LED_
 
+_08/10 Diseño 3D divididos en partes del gabinete_
 
 ## Bugs/Trabajo por hacer:
 
