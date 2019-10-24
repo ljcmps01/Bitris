@@ -64,6 +64,8 @@ _20/09 Diseño 3D de la matriz LED_
 
 _08/10 Diseño 3D divididos en partes del gabinete_
 
+_08/10 Conclucion de codigo Bitris Pago_
+
 ## Bugs/Trabajo por hacer:
 
 ### Software 
