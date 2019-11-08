@@ -1,6 +1,7 @@
 /*Adiciones:
  * Definiciones Globales para configuracion facil del juego
  */
+#include "pitches.h"
 #define DISPLAY PORTC
 #define COL PORTD
 #define FILA PORTB
@@ -9,6 +10,137 @@
 #define AlturaDeMatriz 5  //Uno menos que el valor real
 #define AnchoDeMatriz 3   //Uno menos que el valor real
 #define AnimacionVelocidad 500
+
+//Musica
+bool musica=0;
+int velMusica=500;
+int melody[] = {
+ 
+  NOTE_A4, NOTE_G4, NOTE_F4, NOTE_E4, NOTE_C4, NOTE_A3,
+  NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_E4, 0,
+  NOTE_D5, NOTE_A4,
+  NOTE_F4, NOTE_E4, NOTE_D4,
+  NOTE_D4, NOTE_E4, NOTE_F4, NOTE_D4,
+ 
+  NOTE_C4, NOTE_D4, NOTE_A3,
+  NOTE_D5, NOTE_A4,
+  NOTE_F4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_E4,
+  NOTE_F4, NOTE_G4, NOTE_E4, NOTE_C4,
+  NOTE_D4, NOTE_A3, NOTE_D4,
+  NOTE_D5, NOTE_A4,
+ 
+  NOTE_F4, NOTE_E4, NOTE_D4,
+  NOTE_D4, NOTE_E4, NOTE_F4, NOTE_D4,
+  NOTE_C4, NOTE_D4, NOTE_A3,
+  NOTE_D5, NOTE_A4,
+  NOTE_F4, NOTE_G4, NOTE_A4, NOTE_D4,
+  NOTE_E4, NOTE_G4, NOTE_E4, NOTE_C4,
+ 
+  NOTE_D4,
+  NOTE_G2, NOTE_G2, NOTE_AS2, NOTE_D3,
+  NOTE_F3, NOTE_E3, NOTE_D3, NOTE_A2,
+  NOTE_G2, NOTE_G2, NOTE_AS2, NOTE_D3,
+  NOTE_F3, NOTE_G3, NOTE_A3,
+  NOTE_AS4, NOTE_A4, NOTE_G4, NOTE_F4, NOTE_G4,
+ 
+  NOTE_A4, NOTE_D4, NOTE_A4,
+  NOTE_G4, NOTE_G4, NOTE_G4, NOTE_G4, NOTE_F4, NOTE_E4, NOTE_F4, NOTE_G4,
+  NOTE_F4, NOTE_G4, NOTE_A4, NOTE_F4,
+  NOTE_G2, NOTE_G2, NOTE_AS2, NOTE_D3,
+  NOTE_F3, NOTE_E3, NOTE_D3, NOTE_A2,
+  NOTE_G2, NOTE_G2, NOTE_AS2, NOTE_D3,
+ 
+  NOTE_F3, NOTE_G3, NOTE_A3,
+  NOTE_AS4, NOTE_A4, NOTE_G4, NOTE_AS4, NOTE_C5,
+  NOTE_D5, NOTE_A4, NOTE_F4, NOTE_D4,
+  NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_G4, NOTE_E4, NOTE_C4, NOTE_A3, NOTE_C4,
+  NOTE_D4, NOTE_D4, NOTE_C4,
+ 
+  NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_A4, NOTE_A4, NOTE_G4, NOTE_F4,
+  NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_F4, NOTE_E4, 0, NOTE_F4, NOTE_E4,
+  NOTE_D4, NOTE_D4, NOTE_D4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_E4, NOTE_D4,
+  NOTE_C4, NOTE_C4, NOTE_C4, NOTE_C4, NOTE_D4, NOTE_E4, NOTE_D4, NOTE_C4,
+ 
+  NOTE_AS3, NOTE_AS3, NOTE_AS3, NOTE_AS3, NOTE_C4, NOTE_D4, NOTE_D4, NOTE_D4,NOTE_C4, NOTE_AS3,
+  NOTE_A3, NOTE_A3, NOTE_A3, NOTE_F4, NOTE_G4, NOTE_F4, NOTE_C4,
+  NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_G4, NOTE_GS4, NOTE_GS4, NOTE_GS4, NOTE_AS4, NOTE_GS4,
+  NOTE_G4, NOTE_G4, NOTE_G4, NOTE_G4, NOTE_GS4, NOTE_G4, NOTE_A4, NOTE_G4,
+ 
+  NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_A4, NOTE_A4, NOTE_G4, NOTE_F4,
+  NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_F4, NOTE_E4, NOTE_F4, NOTE_E4,
+  NOTE_D4, NOTE_D4, NOTE_D4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_E4, NOTE_D4,
+  NOTE_C4, NOTE_C4, NOTE_C4, NOTE_C4, NOTE_D4, NOTE_E4, NOTE_D4, NOTE_C4,
+ 
+  NOTE_AS3, NOTE_AS3, NOTE_AS3, NOTE_AS3, NOTE_C4, NOTE_D4, NOTE_D4, NOTE_D4, NOTE_E4, NOTE_G4,
+  NOTE_A4, NOTE_A4, NOTE_A4, NOTE_A4, NOTE_C5, NOTE_A4, NOTE_F4,
+  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_E4, NOTE_G4, NOTE_A4, NOTE_E4, NOTE_G4,
+  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_D5, NOTE_CS5, 0
+};
+
+int count = sizeof(melody)/sizeof(int);
+ 
+int noteDurations[] = {
+ 
+  4, 8, 8, 8, 8, 4,
+  8, 8, 8, 8, 4, 4,
+  2, 2,
+  4, 4, 2,
+  4, 4, 4, 4,
+ 
+  4, 4, 2,
+  2, 2,
+  4, 4, 4, 8, 8,
+  4, 4, 4, 4,
+  4, 4, 2,
+  2, 2,
+ 
+  4, 4, 2,
+  4, 4, 4, 4,
+  4, 4, 2,
+  2, 2,
+  4, 4, 4, 4,
+  4, 4, 4, 4,
+ 
+  1,
+  4, 4, 4, 4,
+  4, 4, 4, 4,
+  4, 4, 4, 4,
+  4, 4, 2,
+  3, 8, 4, 8, 8,
+ 
+  4, 4, 2,
+  8, 16, 16, 8, 8, 4, 8, 8,
+  4, 4, 4, 4,
+  4, 4, 4, 4,
+  4, 4, 4, 4,
+  4, 4, 4, 4,
+ 
+  4, 4, 2,
+  3, 8, 4, 8, 8,
+  4, 4, 4, 4,
+  8, 16, 16, 8, 8, 8, 8, 8, 8,
+  2, 4, 4,
+ 
+  8, 16, 16, 8, 8, 8, 16, 16, 8, 8,
+  8, 16, 16, 8, 8, 4, 8, 16, 16,
+  8, 16, 16, 8, 8, 8, 16, 16, 8, 8,
+  8, 16, 16, 8, 8, 3, 16, 16,
+ 
+  8, 16, 16, 8, 8, 8, 16, 16, 8, 8,
+  8, 16, 16, 8, 8, 4, 4,
+  8, 16, 16, 8, 8, 8, 16, 16, 8, 8,
+  8, 16, 16, 8, 8, 3, 16, 16,
+ 
+  8, 16, 16, 8, 8, 8, 16, 16, 8, 8,
+  8, 16, 16, 8, 8, 3, 16, 16,
+  8, 16, 16, 8, 8, 8, 16, 16, 8, 8,
+  8, 16, 16, 8, 8, 3, 16, 16,
+ 
+  8, 16, 16, 8, 8, 8, 16, 16, 8, 8,
+  8, 16, 16, 8, 8, 4, 4,
+  8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 4, 4
+};
 
 //Variables del display
 volatile bool Multiplex=0;
@@ -84,6 +216,18 @@ void setup() {
 }
 
 void loop() {
+  if(musica){
+    for(int c=1;c<6;c++){
+      for (int thisNote = 0; thisNote < count; thisNote++) {
+        int noteDuration = (500+velMusica)/noteDurations[thisNote];
+        tone(3, melody[thisNote],noteDuration);
+        int pauseBetweenNotes = noteDuration * 1.30;
+        delay(pauseBetweenNotes);
+        noTone(3);
+      }
+      delay(1000);
+    }
+  }
 }
 
 ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
@@ -217,6 +361,7 @@ ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
 
 ISR(INT0_vect){
   if(!start){
+    musica=1;
     win=0;
     pos=0;
     vida=VIDAS;
@@ -239,6 +384,8 @@ ISR(INT0_vect){
     Serial.print(vida);
     Serial.println(" vidas");
     if(vida<=0){
+      musica=0;
+      noTone(3);
       Serial.println("PERDISTE");
       //TIMSK1&=(0<<OCIE1A);//Se podria deshabilitar el TIMER1 para detener el juego pero se espera agregar animaciones mejor
       VerticalEdit(0,0);
@@ -262,7 +409,6 @@ void Drop(){
     EIMSK|=(1<<INT0);    
   }
   hab[caida][place]=1;
-  
 }
 
 int rowCheck(){
@@ -279,6 +425,7 @@ int rowCheck(){
       Serial.println(altura);        
       Serial.print("Nivel: ");
       Serial.println(nivelSelector);
+      velMusica=velMusica-100;
     }
     else{
       Clear();
