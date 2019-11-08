@@ -64,7 +64,13 @@ _20/09 Diseño 3D de la matriz LED_
 
 _08/10 Diseño 3D divididos en partes del gabinete_
 
-_08/10 Conclucion de codigo Bitris Pago_
+_08/10 Conclusion de codigo Bitris Pago_
+
+_05/11 Se agregó la musica principal del juego_
+
+_06/11 Se realizaron pruebas en protoboard con el parlante para un decente sonido_
+
+_08/11 Se realizó el esquematico del amplificador_
 
 ## Bugs/Trabajo por hacer:
 
@@ -74,13 +80,13 @@ _08/10 Conclucion de codigo Bitris Pago_
 
 * **Doble pulsacion**
 
-* Agregar sonido
+* Agregar sonido (Principal hecho, falta perdida de vidas, punto, nivel, fin ganado, gameover)
 
 ### Hardware 
 
-* Diseñar amplificador (SCH Y PCB)
+* Diseñar amplificador (PCB)
 
-* Montar placas
+* Montar placas (Resta amplificador)
 
 ## Creadores
 
