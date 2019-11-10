@@ -507,6 +507,9 @@ void VerticalClean(){//animate=1
       start=0;
       game=0;
       boton=false;
+      musica=0;
+      noTone(3);
+      velMusica=500;
       EIMSK|=(1<<INT0);
       }
   }
