@@ -72,6 +72,10 @@ _06/11 Se realizaron pruebas en protoboard con el parlante para un decente sonid
 
 _08/11 Se realizó el esquematico del amplificador_
 
+_11/11 Arreglado problemas de la musica_
+
+_11/11 Realizado programa de pago CON MUSICA_
+
 ## Bugs/Trabajo por hacer:
 
 ### Software 

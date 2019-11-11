@@ -193,7 +193,7 @@ void setup() {
   FILA=1;  
   DDRC|=0B0111111;
   COL=80;
-  DDRD|=0b11110000;
+  DDRD|=0b11111000;
   Serial.begin(9600);
   cli();                  //deshabilito temporalmente las interrupciones
   TCCR1A=0;               //limpiamos los registros de control
@@ -217,16 +217,20 @@ void setup() {
 
 void loop() {
   if(musica){
-    for(int c=1;c<6;c++){
-      for (int thisNote = 0; thisNote < count; thisNote++) {
+    for (int thisNote = 0; thisNote < count; thisNote++) {
+      if(musica){
         int noteDuration = (500+velMusica)/noteDurations[thisNote];
         tone(3, melody[thisNote],noteDuration);
         int pauseBetweenNotes = noteDuration * 1.30;
         delay(pauseBetweenNotes);
         noTone(3);
       }
-      delay(1000);
+      else break;
     }
+  }
+  else{
+    noTone(3);
+    PORTD&=~(1<<3);
   }
 }
 
@@ -362,6 +366,7 @@ ISR(TIMER1_COMPA_vect){                 //ISR es la rutina de interrupcion
 ISR(INT0_vect){
   if(!start){
     musica=1;
+    velMusica=500;
     win=0;
     pos=0;
     vida=VIDAS;
@@ -529,6 +534,8 @@ void Blink(){       //animate=0
     }
     else {
       start=0;
+      musica=0;
+      noTone(3);
     }
     i=0;
   }
