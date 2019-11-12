@@ -8511,9 +8511,7 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <part name="X1" library="con-molex" deviceset="22-23-2021" device="" value="Boton"/>
 <part name="P+5" library="supply1" deviceset="VCC" device=""/>
 <part name="SUPPLY5" library="supply2" deviceset="GND" device=""/>
-<part name="P+6" library="supply1" deviceset="VCC" device=""/>
 <part name="SUPPLY6" library="supply2" deviceset="GND" device=""/>
-<part name="R6" library="rcl" deviceset="R-US_" device="M0805"/>
 <part name="R5" library="rcl" deviceset="R-US_" device="M0805"/>
 <part name="R7" library="rcl" deviceset="R-US_" device="M0805"/>
 <part name="R8" library="rcl" deviceset="R-US_" device="M0805"/>
@@ -8636,15 +8634,8 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <instance part="SUPPLY5" gate="GND" x="137.16" y="27.94" smashed="yes">
 <attribute name="VALUE" x="135.255" y="24.765" size="1.778" layer="96"/>
 </instance>
-<instance part="P+6" gate="VCC" x="2.54" y="101.6" smashed="yes">
-<attribute name="VALUE" x="0" y="99.06" size="1.778" layer="96" rot="R90"/>
-</instance>
 <instance part="SUPPLY6" gate="GND" x="15.24" y="99.06" smashed="yes">
 <attribute name="VALUE" x="13.335" y="95.885" size="1.778" layer="96"/>
-</instance>
-<instance part="R6" gate="G$1" x="7.62" y="96.52" smashed="yes">
-<attribute name="NAME" x="3.81" y="98.0186" size="1.778" layer="95"/>
-<attribute name="VALUE" x="3.81" y="93.218" size="1.778" layer="96"/>
 </instance>
 <instance part="R5" gate="G$1" x="134.62" y="60.96" smashed="yes">
 <attribute name="NAME" x="130.81" y="62.4586" size="1.778" layer="95"/>
@@ -8675,7 +8666,7 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <attribute name="VALUE" x="135.89" y="55.118" size="1.778" layer="96"/>
 </instance>
 <instance part="X4" gate="-1" x="17.78" y="109.22" rot="R90"/>
-<instance part="X4" gate="-2" x="20.32" y="109.22" rot="R90"/>
+<instance part="X4" gate="-2" x="73.66" y="73.66" rot="R90"/>
 <instance part="JP2" gate="A" x="142.24" y="93.98"/>
 <instance part="JP3" gate="G$1" x="142.24" y="83.82"/>
 </instances>
@@ -8757,11 +8748,6 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <segment>
 <pinref part="IC2" gate="P" pin="VDD"/>
 <pinref part="P+5" gate="VCC" pin="VCC"/>
-</segment>
-<segment>
-<pinref part="P+6" gate="VCC" pin="VCC"/>
-<pinref part="R6" gate="G$1" pin="1"/>
-<wire x1="2.54" y1="99.06" x2="2.54" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -8903,16 +8889,6 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <wire x1="88.9" y1="76.2" x2="96.52" y2="76.2" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="76.2" x2="96.52" y2="76.2" width="0.1524" layer="91"/>
 <junction x="96.52" y="76.2"/>
-</segment>
-</net>
-<net name="N$34" class="0">
-<segment>
-<pinref part="IC1" gate="G$1" pin="PC6(/RESET/PCI14)"/>
-<wire x1="12.7" y1="96.52" x2="17.78" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="96.52" x2="17.78" y2="96.52" width="0.1524" layer="91"/>
-<pinref part="R6" gate="G$1" pin="2"/>
-<pinref part="X4" gate="-2" pin="S"/>
-<wire x1="20.32" y1="106.68" x2="20.32" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$23" class="0">
@@ -9112,6 +9088,12 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <wire x1="111.76" y1="55.88" x2="73.66" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="106.68" y1="93.98" x2="111.76" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="111.76" y1="93.98" x2="111.76" y2="55.88" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$30" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="(PCI16/RXD)PD0"/>
+<pinref part="X4" gate="-2" pin="S"/>
 </segment>
 </net>
 </nets>
